@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';<% if (isMobile) { %>
+import { APP_SHELL_DIRECTIVES } from '@angular/app-shell';<% } %>
 
 @Component({
   selector: '<%= prefix %>-root',<% if (inlineTemplate) { %>

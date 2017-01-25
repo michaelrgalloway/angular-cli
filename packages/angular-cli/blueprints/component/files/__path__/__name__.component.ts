@@ -1,5 +1,5 @@
 import { Component, OnInit<% if(viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection) { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
-
+import { <%= classifiedModuleName %>Service } from '../<%= dasherizedModuleName %>.service';
 @Component({
   selector: '<%= selector %>',<% if(inlineTemplate) { %>
   template: `
@@ -15,7 +15,7 @@ import { Component, OnInit<% if(viewEncapsulation) { %>, ViewEncapsulation<% }%>
 })
 export class <%= classifiedModuleName %>Component implements OnInit {
 
-  constructor() { }
+  constructor(private service: <%= classifiedModuleName %>Service) { }
 
   ngOnInit() {
   }

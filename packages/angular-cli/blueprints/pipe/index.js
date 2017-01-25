@@ -16,8 +16,7 @@ module.exports = {
     { name: 'flat', type: Boolean, default: true },
     { name: 'spec', type: Boolean },
     { name: 'skip-import', type: Boolean, default: false },
-    { name: 'module', type: String, aliases: ['m'] },
-    { name: 'export', type: Boolean, default: false }
+    { name: 'module', type: String, aliases: ['m'] }
   ],
 
   beforeInstall: function(options) {
@@ -99,14 +98,7 @@ module.exports = {
     if (!options.skipImport) {
       returns.push(
         astUtils.addDeclarationToModule(this.pathToModule, className, importPath)
-          .then(change => change.apply(NodeHost))
-          .then((result) => {
-            if (options.export) {
-              return astUtils.addExportToModule(this.pathToModule, className, importPath)
-                .then(change => change.apply(NodeHost));
-            }
-            return result;
-          }));
+          .then(change => change.apply(NodeHost)));
       this._writeStatusToUI(chalk.yellow, 'update', path.relative(this.project.root, this.pathToModule));
     }
 

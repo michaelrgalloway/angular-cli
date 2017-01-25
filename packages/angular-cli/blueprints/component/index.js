@@ -21,8 +21,7 @@ module.exports = {
     { name: 'view-encapsulation', type: String, aliases: ['ve'] },
     { name: 'change-detection', type: String, aliases: ['cd'] },
     { name: 'skip-import', type: Boolean, default: false },
-    { name: 'module', type: String, aliases: ['m'] },
-    { name: 'export', type: Boolean, default: false }
+    { name: 'module', type: String, aliases: ['m'] }
   ],
 
   beforeInstall: function(options) {
@@ -157,19 +156,12 @@ module.exports = {
     const className = stringUtils.classify(`${options.entity.name}Component`);
     const fileName = stringUtils.dasherize(`${options.entity.name}.component`);
     const componentDir = path.relative(path.dirname(this.pathToModule), this.generatePath);
-    const importPath = componentDir ? `./${componentDir}/${fileName}` : `./${fileName}`;
+    const importPath = componentDir ? `./${componentDir}/components/${fileName}` : `./${fileName}`;
 
     if (!options.skipImport) {
       returns.push(
         astUtils.addDeclarationToModule(this.pathToModule, className, importPath)
-          .then(change => change.apply(NodeHost))
-          .then((result) => {
-            if (options.export) {
-              return astUtils.addExportToModule(this.pathToModule, className, importPath)
-                .then(change => change.apply(NodeHost));
-            }
-            return result;
-          }));
+          .then(change => change.apply(NodeHost)));
       this._writeStatusToUI(chalk.yellow, 'update', path.relative(this.project.root, this.pathToModule));
     }
 
